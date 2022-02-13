@@ -44,7 +44,7 @@ This will create a virtual envirment in `/src/venv/`. To "activate" that virtual
 ### Windows
 
 ```powershell
-./venv/Scripts/Activate.ps1
+.\venv\Scripts\Activate.ps1
 ```
 
 ### Linux or macOS
