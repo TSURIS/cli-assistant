@@ -1,6 +1,6 @@
 # TSURIS CLI Assistant
 
-The Command Line Interface (CLI) to the personal assistant.
+The Command Line Interface (CLI) to the **T**echnologically **S**ufficient **U**ser **R**eaction **I**nformation **S**ystem (TSURIS) personal assistant.
 
 ## Developer Workstation Set Up
 
