@@ -4,7 +4,7 @@ The Command Line Interface (CLI) to the personal assistant.
 
 ## Developer Workstation Set Up
 
-Below are the steps a developer should take to get his project set up locally.
+Below are the steps a developer should take to get his/her project set up locally.
 
 ## STEP 0: Clone this repository
 
@@ -53,7 +53,7 @@ This will create a virtual envirment in `/src/venv/`. To "activate" that virtual
 source ./venv/bin/activate
 ```
 
-## STEP 3: Install 3rd Party Depdencies
+## STEP 3: Install 3rd Party Dependencies
 
 From that same `src` folder, run:
 
