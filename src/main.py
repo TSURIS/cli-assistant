@@ -1,6 +1,6 @@
 import requests
 import sys
-from functions.online_ops import find_my_ip, get_latest_news, get_random_advice, get_random_joke, get_trending_movies, get_weather_report, play_on_youtube, search_on_google, search_on_wikipedia, send_email, send_whatsapp_message
+from functions.online_ops import *
 import pyttsx3
 import speech_recognition as sr
 from decouple import config
@@ -10,17 +10,15 @@ from random import choice
 from utils import opening_text
 from pprint import pprint
 
-from intents import whattime as wt
-
+from intents import myipintent, newsintent, weatherintent,whattimeintent,wikipediaintent
 
 USERNAME = config('USER')
 BOTNAME = config('BOTNAME')
 
-
 engine = pyttsx3.init('sapi5')
 
 # Set Rate
-engine.setProperty('rate', 190)
+engine.setProperty('rate', 220)
 
 # Set Volume
 engine.setProperty('volume', 1.0)
@@ -68,8 +66,10 @@ def take_user_input():
         audio = r.listen(source)
 
     try:
-        print('Recognizing...')
+        print('Recognizing...', end=' ', flush=True)
         query = r.recognize_google(audio, language='en-us')
+        print(f'Heard: "{query}".')        
+        
         if not 'exit' in query or 'stop' in query:
             speak(choice(opening_text))
         else:
@@ -82,10 +82,11 @@ def take_user_input():
     except Exception:
         speak('Sorry, I could not understand. Could you please say that again?')
         query = 'None'
+    
+    print(f'Heard: "{query}".')
     return query
 
-
-if __name__ == '__main__':
+def main():
     greet_user()
     print('-' * 70)
     try:
@@ -108,16 +109,16 @@ if __name__ == '__main__':
                 open_calculator()
 
             elif 'ip address' in query:
-                ip_address = find_my_ip()
+                ip_address = myipintent.get_intent_results()
                 speak(f'Your IP Address is {ip_address}.')
                 print(f'Your IP Address is {ip_address}')
 
             elif 'wikipedia' in query:
                 speak('What do you want to search on Wikipedia?')
                 search_query = take_user_input().lower()
-                results = search_on_wikipedia(search_query)
+                results = wikipediaintent.get_intent_results(search_query)
+                print(f'TSURIS>> {results}')
                 speak(f"According to Wikipedia, {results}")
-                print(results)
 
             elif 'youtube' in query:
                 speak('What do you want to play on Youtube, sir?')
@@ -137,17 +138,45 @@ if __name__ == '__main__':
                 send_whatsapp_message(number, message)
                 speak("I've sent the message sir.")
 
-            elif "send an email" in query:
-                speak("On what email address do I send sir? Please enter in the console: ")
-                receiver_address = input("Enter email address: ")
-                speak("What should be the subject sir?")
+            elif "send email" in query:
+                print("TSURIS>> What is the e-mail adddress: ")
+                speak("What is the e-mail adddress: ")
+                receiver_address = take_user_input() \
+                                    .replace('at sign','@') \
+                                    .replace('ampersand','@') \
+                                    .replace('at','@') \
+                                    .replace('dot','.') \
+                                    .replace(' ','')
+                if receiver_address.lower() == 'me' or receiver_address.lower() == 'myself':
+                    receiver_address = config('USER_EMAIL')
+                if receiver_address.lower() == 'cancel':
+                    print(f'Cancelling...')
+                    speak('Cancelling.')
+                    break
+                print(f'  >> Email: {receiver_address}')
+                
+                print("TSURIS>> What should be the subject?")
+                speak("What should be the subject?")
                 subject = take_user_input().capitalize()
-                speak("What is the message sir?")
+                
+                if subject.lower() == 'cancel':
+                    print(f'Cancelling...')
+                    speak('Cancelling.')
+                    break
+                print(f'  >> Subject: {subject}')
+                
+                print("TSURIS>> What is the message?")
+                speak("What is the message?")
                 message = take_user_input().capitalize()
+                if message.lower() == 'cancel':
+                    print(f'Cancelling...')
+                    speak('Cancelling.')
+                    break
+                
                 if send_email(receiver_address, subject, message):
-                    speak("I've sent the email sir.")
+                    speak("I've sent the email.")
                 else:
-                    speak("Something went wrong while I was sending the mail. Please check the error logs sir.")
+                    speak("Daggum! Something went wrong while I was sending the mail. Please check the console for more information.")
 
             elif 'joke' in query:
                 joke = get_random_joke()
@@ -167,7 +196,7 @@ if __name__ == '__main__':
                 speak(f"Some of the trending movies are: {movies}")
 
             elif 'news' in query:
-                headlines = get_latest_news()
+                headlines = newsintent.get_intent_results()
                 print(f'TSURIS >> Latest News')
                 for headline in headlines:
                     print(f' - {headline}')
@@ -175,20 +204,20 @@ if __name__ == '__main__':
                 speak(headlines)
                 
             elif 'what time is it' in query:
-                the_time = wt.get_what_time_intent()
+                the_time = whattimeintent.get_intent_results()
                 print(f'TSURIS >> {the_time}')
                 speak(the_time)
 
             elif 'weather' in query:
-                ip_address = find_my_ip()
-                city = requests.get(f"https://ipapi.co/{ip_address}/city/").text
+                ip_address = myipintent.get_intent_results()
+                location = myipintent.get_location_from_ip(ip_address)
                 print(f'TSURIS >> Weather')
-                speak(f"Getting weather report for {city}")
+                speak(f"Getting weather report for {location}")
 
-                current_conditions, temperature, feels_like, low, high, humidity, sunrise, sunset = get_weather_report(city)
+                current_conditions, temperature, feels_like, low, high, humidity, sunrise, sunset = weatherintent.get_intent_results(location)
                 
-                report = f'TSURIS >> Current conditions in {city} are {current_conditions} with a temperature of {temperature} and humidity at {humidity}. It feels like {feels_like}. Todays low is {low} and the high is {high}. Sunrise is {sunrise} and sunset is {sunset} today.'
-                print(report)
+                report = f'Current conditions in {location} are {current_conditions} with a temperature of {temperature} and humidity at {humidity}. It feels like {feels_like}. Todays low is {low} and the high is {high}. Sunrise is {sunrise} and sunset is {sunset} today.'
+                print(f'TSURIS >> {report}')
                 speak(report)
                 
     except (KeyboardInterrupt):
@@ -201,3 +230,6 @@ if __name__ == '__main__':
                                   limit=2,
                                   file=sys.stdout)
         sys.exit()
+
+if __name__ == '__main__':
+    main()
