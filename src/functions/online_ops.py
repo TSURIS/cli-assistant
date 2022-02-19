@@ -4,6 +4,8 @@ import pywhatkit as kit
 from email.message import EmailMessage
 import smtplib
 from decouple import config
+import math
+import datetime
 
 NEWS_API_KEY = config("NEWS_API_KEY")
 OPENWEATHER_APP_ID = config("OPENWEATHER_APP_ID")
@@ -55,7 +57,8 @@ def send_email(receiver_address, subject, message):
 def get_latest_news():
     news_headlines = []
     res = requests.get(
-        f"https://newsapi.org/v2/top-headlines?country=in&apiKey={NEWS_API_KEY}&category=general").json()
+        f"https://newsapi.org/v2/top-headlines?country=us&apiKey={NEWS_API_KEY}&category=general").json()
+    #print(res)
     articles = res["articles"]
     for article in articles:
         news_headlines.append(article["title"])
@@ -64,20 +67,29 @@ def get_latest_news():
 
 def get_weather_report(city):
     res = requests.get(
-        f"http://api.openweathermap.org/data/2.5/weather?q={city}&appid={OPENWEATHER_APP_ID}&units=metric").json()
-    weather = res["weather"][0]["main"]
-    temperature = res["main"]["temp"]
-    feels_like = res["main"]["feels_like"]
-    return weather, f"{temperature}℃", f"{feels_like}℃"
+        f"http://api.openweathermap.org/data/2.5/weather?q={city}&appid={OPENWEATHER_APP_ID}&units=imperial").json()
+    #print(res)
+    
+    current_conditions = res["weather"][0]["description"]
+    temperature = math.trunc(res["main"]["temp"])
+    feels_like = math.trunc(res["main"]["feels_like"])
+    low = math.trunc(res["main"]["temp_min"])
+    high = math.trunc(res["main"]["temp_max"])
+    humidity = str(math.trunc(res["main"]["humidity"])) + ' percent'
+    sunrise = datetime.datetime.fromtimestamp(res["sys"]["sunrise"]).strftime('%I:%M %p')
+    sunset = datetime.datetime.fromtimestamp(res["sys"]["sunset"]).strftime('%I:%M %p')
+
+    return current_conditions, temperature, feels_like, low, high, humidity, sunrise, sunset
 
 
 def get_trending_movies():
     trending_movies = []
     res = requests.get(
         f"https://api.themoviedb.org/3/trending/movie/day?api_key={TMDB_API_KEY}").json()
+    #print(res)
     results = res["results"]
     for r in results:
-        trending_movies.append(r["original_title"])
+        trending_movies.append(f'{r["original_title"]} - {r["overview"]}')
     return trending_movies[:5]
 
 

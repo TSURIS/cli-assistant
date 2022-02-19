@@ -14,6 +14,12 @@ This might be obvious, but:
 git clone git@github.com:TSURIS/cli-assistant.git
 ```
 
+Optionally, upgrade pip and wheel too:
+
+```bash
+python -m pip install --upgrade pip setuptools wheel
+```
+
 ## STEP 1: Add an `.env` file.
 
 In your `src` folder, add an `.env` file with the various values used by this system. Below is an empty starter as a template:

@@ -1,5 +1,5 @@
 opening_text = [
-    "Cool, I'm on it sir.",
-    "Okay sir, I'm working on it.",
-    "Just a second sir.",
+    "Let me get that for you",
+    "I'm working on it.",
+    "Just a moment",
 ]
