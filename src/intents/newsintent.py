@@ -9,7 +9,8 @@ Example:
         $ python -m intents.newsintent
         
 """
-
+import json
+import logging
 import requests
 from decouple import config
 
@@ -24,11 +25,16 @@ def get_intent_results():
 
     news_headlines = []
     url = f"https://newsapi.org/v2/top-headlines?country=us&apiKey={NEWS_API_KEY}&category=general"
-    res = requests.get(url).json()
-    #print(res)
-    articles = res["articles"]
+    response = requests.get(url).json()
+    
+    logging.debug(f"NewsAPI JSON response: {json.dumps(response)}")
+    
+    articles = response["articles"]
     for article in articles:
         news_headlines.append(article["title"])
+    
+    logging.info(f"NewsAPI top 5 headlines: { articles }")    
+    
     return news_headlines[:5]
 
 class NewsIntentError(Exception):

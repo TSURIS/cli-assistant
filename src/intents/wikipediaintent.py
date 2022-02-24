@@ -11,6 +11,7 @@ Example:
     You will be prompted for a keyword to search.
 """
 
+import logging
 import wikipedia
 from decouple import config
 
@@ -25,8 +26,9 @@ def get_intent_results(keyword):
     Returns:
         str: Returns the first 2 sentences of the matching article.
     """
-
+    logging.debug(f"Attempting to get Wikipedia summary from keyword: {keyword}")
     results = wikipedia.summary(keyword, sentences=2)
+    logging.info(f"Wikipedia results: {results}")
     return results
 
 class WikipediaIntentError(Exception):
@@ -50,6 +52,10 @@ class WikipediaIntentError(Exception):
 
 def main():
     """The main entrypoint for this module, when running from the command-line."""
+    # level = logging.DEBUG
+    # format = '[%(levelname)s] %(asctime)s - %(message)s'
+    # logging.basicConfig(level=level, format=format)
+        
     topic = input('Enter Wikipedia topic> ')
     print(get_intent_results(topic))
 

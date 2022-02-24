@@ -9,6 +9,7 @@ Example:
         $ python -m intents.whattimeintent
 """
 
+import logging
 from datetime import datetime, time
 
 def get_intent_results():
@@ -17,8 +18,10 @@ def get_intent_results():
     Returns:
         str: A formatted statement specifying the current time, and then date.
     """
+    logging.debug(f"Retrieving time...")
     current_time = datetime.now()
     formatted = current_time.strftime('%I:%M %p, on %A, %b %d %Y')
+    logging.info(f"Time retrieved: {formatted}")
     return f'The current time is {formatted}'
 
 class WhatTimeIntentError(Exception):
@@ -42,6 +45,10 @@ class WhatTimeIntentError(Exception):
 
 def main():
     """The main entrypoint for this module, when running from the command-line."""
+    # level = logging.DEBUG
+    # format = '[%(levelname)s] %(asctime)s - %(message)s'
+    # logging.basicConfig(level=level, format=format)
+    
     print(get_intent_results())
 
 

@@ -11,12 +11,15 @@ Example:
     You will be prompted for a location.
 """
 
+import logging
 import requests
+import json
 import math
 import datetime
 from decouple import config
 
 OPENWEATHER_APP_ID = config("OPENWEATHER_APP_ID")
+
 
 def get_intent_results(location):
     """Gets the results of the default intent.
@@ -28,19 +31,32 @@ def get_intent_results(location):
         tuple: Returns a tuple of: current_conditions, temperature, feels_like, low, high, humidity, sunrise, sunset
     """
     url = f"http://api.openweathermap.org/data/2.5/weather?q={location}&appid={OPENWEATHER_APP_ID}&units=imperial"
-    res = requests.get(url).json()
-    #print(res)
-    
-    current_conditions = res["weather"][0]["description"]
-    temperature = math.trunc(res["main"]["temp"])
-    feels_like = math.trunc(res["main"]["feels_like"])
-    low = math.trunc(res["main"]["temp_min"])
-    high = math.trunc(res["main"]["temp_max"])
-    humidity = str(math.trunc(res["main"]["humidity"])) + ' percent'
-    sunrise = datetime.datetime.fromtimestamp(res["sys"]["sunrise"]).strftime('%I:%M %p')
-    sunset = datetime.datetime.fromtimestamp(res["sys"]["sunset"]).strftime('%I:%M %p')
+    response = requests.get(url).json()
+    logging.debug(f"OpenWeather JSON response: {json.dumps(response)}")
+
+    current_conditions = response["weather"][0]["description"]
+    temperature = math.trunc(response["main"]["temp"])
+    feels_like = math.trunc(response["main"]["feels_like"])
+    low = math.trunc(response["main"]["temp_min"])
+    high = math.trunc(response["main"]["temp_max"])
+    humidity = str(math.trunc(response["main"]["humidity"])) + ' percent'
+    sunrise = datetime.datetime.fromtimestamp(
+        response["sys"]["sunrise"]).strftime('%I:%M %p')
+    sunset = datetime.datetime.fromtimestamp(
+        response["sys"]["sunset"]).strftime('%I:%M %p')
+
+    logging.info(f"OpenWeather Results:")
+    logging.info(f" - current_conditions: { current_conditions }")
+    logging.info(f" - temperature: { temperature }")
+    logging.info(f" - feels_like: { feels_like }")
+    logging.info(f" - low: { low }")
+    logging.info(f" - high: { high }")
+    logging.info(f" - humidity: { humidity }")
+    logging.info(f" - sunrise: { sunrise }")
+    logging.info(f" - sunset: { sunset }")
 
     return current_conditions, temperature, feels_like, low, high, humidity, sunrise, sunset
+
 
 class WeatherIntentError(Exception):
     """TSURIS: WeatherIntentError
@@ -60,6 +76,7 @@ class WeatherIntentError(Exception):
     def __init__(self, msg, code):
         self.msg = msg
         self.code = code
+
 
 def main():
     """The main entrypoint for this module, when running from the command-line."""

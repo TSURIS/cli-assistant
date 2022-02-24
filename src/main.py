@@ -1,3 +1,4 @@
+import logging
 import requests
 import sys
 from functions.online_ops import *
@@ -87,6 +88,12 @@ def take_user_input():
     return query
 
 def main():
+    
+    # Set up logging
+    level = logging.INFO
+    format = '[%(levelname)s] %(asctime)s - %(message)s'
+    logging.basicConfig(level=level, format=format)
+    
     greet_user()
     print('-' * 70)
     try:

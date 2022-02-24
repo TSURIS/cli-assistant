@@ -10,6 +10,7 @@ Example:
 
 """
 
+import logging
 import requests
 
 def get_intent_results():
@@ -33,8 +34,12 @@ def get_location_from_ip(ip_address):
     """
     url = f"https://ipapi.co/{ip_address}/city/"
     response = requests.get(url)
-    print(response.text)
+    
+    logging.debug(f"IPAPI response: { response.text }")
+    
     location = response.text
+    
+    logging.info(f"IPAPI location: { location }")
     
     return location
 

@@ -84,12 +84,15 @@ def send_email(receiver_address, subject, message):
 
 def get_trending_movies():
     trending_movies = []
-    res = requests.get(
-        f"https://api.themoviedb.org/3/trending/movie/day?api_key={TMDB_API_KEY}").json()
-    #print(res)
-    results = res["results"]
+    
+    url = f"https://api.themoviedb.org/3/trending/movie/day?api_key={TMDB_API_KEY}"
+    response = requests.get(url).json()
+        
+    print(response)
+    
+    results = response["results"]
     for r in results:
-        trending_movies.append(f'{r["original_title"]} - {r["overview"]}')
+        trending_movies.append(f'{r["original_title"]}') # - {r["overview"]}')
     return trending_movies[:5]
 
 
