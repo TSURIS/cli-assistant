@@ -1,4 +1,5 @@
 import logging
+import traceback
 import requests
 import sys
 from functions.online_ops import *
@@ -231,8 +232,7 @@ def main():
         print('\nGoodbye.')
         sys.exit()
     except Exception as e:
-        print("woopsy daisy")
-        exc_type, exc_value, exc_tranceback = sys.exe_info()
+        exc_type, exc_value, exc_traceback = sys.exe_info()
         traceback.print_exception(exc_type, exc_value, exc_traceback,
                                   limit=2,
                                   file=sys.stdout)
