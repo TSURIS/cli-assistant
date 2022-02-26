@@ -2,6 +2,8 @@
 
 The Command Line Interface (CLI) to the **T**echnologically **S**ufficient **U**ser **R**eaction **I**nformation **S**ystem (TSURIS) personal assistant.
 
+<img src="docs/logo/Logo_TransForLight.png" height="50px"/>
+
 ## Developer Workstation Set Up
 
 Below are the steps a developer should take to get his/her project set up locally.
