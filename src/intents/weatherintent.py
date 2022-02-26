@@ -17,6 +17,8 @@ import json
 import math
 import datetime
 from decouple import config
+import myipintent
+from speaker import speak
 
 OPENWEATHER_APP_ID = config("OPENWEATHER_APP_ID")
 
@@ -57,6 +59,17 @@ def get_intent_results(location):
 
     return current_conditions, temperature, feels_like, low, high, humidity, sunrise, sunset
 
+def handle_intent(query):
+    ip_address = myipintent.get_intent_results()
+    location = myipintent.get_location_from_ip(ip_address)
+    print(f'TSURIS >> Weather')
+    speak(f"Getting weather report for {location}")
+
+    current_conditions, temperature, feels_like, low, high, humidity, sunrise, sunset = get_intent_results(location)
+
+    report = f'Current conditions in {location} are {current_conditions} with a temperature of {temperature} and humidity at {humidity}. It feels like {feels_like}. Todays low is {low} and the high is {high}. Sunrise is {sunrise} and sunset is {sunset} today.'
+    print(f'TSURIS >> {report}')
+    speak(report)
 
 class WeatherIntentError(Exception):
     """TSURIS: WeatherIntentError

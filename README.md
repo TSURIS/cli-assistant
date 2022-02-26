@@ -25,10 +25,11 @@ python -m pip install --upgrade pip setuptools wheel
 In your `src` folder, add an `.env` file with the various values used by this system. Below is an empty starter as a template:
 
 ```text
-USER=Rob
+USERNAME=Rob
+USER_EMAIL=rob@example.com
 BOTNAME=TSURIS
-EMAIL=None
-PASSWORD=None
+EMAIL_ACCOUNT=None
+EMAIL_PASSWORD=None
 NEWS_API_KEY=None
 OPENWEATHER_APP_ID=None
 TMDB_API_KEY=None

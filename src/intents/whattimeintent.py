@@ -11,6 +11,7 @@ Example:
 
 import logging
 from datetime import datetime, time
+from speaker import speak
 
 def get_intent_results():
     """Gets the results of the default intent.
@@ -23,6 +24,11 @@ def get_intent_results():
     formatted = current_time.strftime('%I:%M %p, on %A, %b %d %Y')
     logging.info(f"Time retrieved: {formatted}")
     return f'The current time is {formatted}'
+
+def handle_intent(query):
+    the_time = get_intent_results()
+    print(f'TSURIS >> {the_time}')
+    speak(the_time)
 
 class WhatTimeIntentError(Exception):
     """TSURIS: WhatTimeIntentError
@@ -45,9 +51,9 @@ class WhatTimeIntentError(Exception):
 
 def main():
     """The main entrypoint for this module, when running from the command-line."""
-    # level = logging.DEBUG
-    # format = '[%(levelname)s] %(asctime)s - %(message)s'
-    # logging.basicConfig(level=level, format=format)
+    level = logging.WARNING
+    format = '[%(levelname)s] %(asctime)s - %(message)s'
+    logging.basicConfig(level=level, format=format)
     
     print(get_intent_results())
 

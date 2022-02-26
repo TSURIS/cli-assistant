@@ -13,6 +13,7 @@ import json
 import logging
 import requests
 from decouple import config
+from speaker import speak
 
 NEWS_API_KEY = config("NEWS_API_KEY")
 
@@ -36,6 +37,14 @@ def get_intent_results():
     logging.info(f"NewsAPI top 5 headlines: { articles }")    
     
     return news_headlines[:5]
+
+def handle_intent(query):
+    headlines = get_intent_results()
+    print(f'TSURIS >> Latest News')
+    for headline in headlines:
+        print(f' - {headline}')
+    speak(f"Here are the top 5 news headlines:")
+    speak(headlines)
 
 class NewsIntentError(Exception):
     """TSURIS: NewsIntentError

@@ -12,6 +12,7 @@ Example:
 
 import logging
 import requests
+from speaker import speak
 
 def get_intent_results():
     """Gets the results of the default intent.
@@ -22,6 +23,11 @@ def get_intent_results():
     response = requests.get('https://api64.ipify.org?format=json').json()
     #print(response)
     return response["ip"]
+
+def handle_intent(query):
+    ip_address = get_intent_results()
+    print(f'Your IP Address is {ip_address}.')
+    speak(f'Your IP Address is {ip_address}.')
 
 def get_location_from_ip(ip_address):
     """Gets a city location from a public IP address.
