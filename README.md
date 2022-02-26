@@ -1,7 +1,10 @@
+<p style="text-align: center;">
 <img src="docs/logo/Logo_TransForLight.png" height="120px"/>
 
 ![](https://img.shields.io/github/repo-size/TSURIS/cli-assistant?style=for-the-badge) ![](https://img.shields.io/github/license/TSURIS/cli-assistant?style=for-the-badge)
 
+</p>
+  
 # TSURIS CLI Assistant
 
 The Command Line Interface (CLI) to the **T**echnologically **S**ufficient **U**ser **R**eaction **I**nformation **S**ystem (TSURIS) personal assistant.
