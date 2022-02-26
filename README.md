@@ -1,6 +1,6 @@
 <img src="docs/logo/Logo_TransForLight.png" height="120px"/>
 
-![](https://img.shields.io/github/repo-size/TSURIS/cli-assistant?style=for-the-badge)
+![](https://img.shields.io/github/repo-size/TSURIS/cli-assistant?style=for-the-badge) ![](https://img.shields.io/github/license/TSURIS/cli-assistant?style=for-the-badge)
 
 # TSURIS CLI Assistant
 
