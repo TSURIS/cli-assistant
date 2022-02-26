@@ -1,4 +1,4 @@
-<img src="docs/logo/Logo_TransForLight.png" height="90px"/>
+<img src="docs/logo/Logo_TransForLight.png" height="120px"/>
 
 # TSURIS CLI Assistant
 
