@@ -1,5 +1,5 @@
 <p style="text-align: center;" align="center">
-<img src="docs/logo/Logo_TransForDark.png" height="120px" style="@media (prefers-color-scheme: dark) { content: url(docs/logo/Logo_TransForDark.png) } @media (prefers-color-scheme: light) { content: url(docs/logo/Logo_TransForDark.png) }"/>
+<img src="docs/logo/Logo_OnDark.png" height="120px"/>
 <br>
 <img src="https://img.shields.io/github/repo-size/TSURIS/cli-assistant?style=flat" /> <img src="https://img.shields.io/github/license/TSURIS/cli-assistant?style=flat" />
 </p>
