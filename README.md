@@ -1,9 +1,8 @@
-<p style="text-align: center;">
-<img src="docs/logo/Logo_TransForLight.png" height="120px"/>
-
-![](https://img.shields.io/github/repo-size/TSURIS/cli-assistant?style=for-the-badge) ![](https://img.shields.io/github/license/TSURIS/cli-assistant?style=for-the-badge)
-
+<p style="text-align: center;" align="center">
+<img src="docs/logo/Logo_TransForLight.png" height="120px"/><br>
+<img src="https://img.shields.io/github/repo-size/TSURIS/cli-assistant?style=flat" /> <img src="https://img.shields.io/github/license/TSURIS/cli-assistant?style=flat" />
 </p>
+<hr>
   
 # TSURIS CLI Assistant
 
