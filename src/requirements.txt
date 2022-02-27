@@ -15,7 +15,7 @@ nltk==3.7
 Pillow==9.0.1
 playsound==1.2.2
 pocketsphinx==0.1.15
-PyAudio=../ref/PyAudio-0.2.11-cp310-cp310-win_amd64.whl
+#PyAudio=../ref/PyAudio-0.2.11-cp310-cp310-win_amd64.whl
 PyAutoGUI==0.9.53
 PyGetWindow==0.0.9
 PyMsgBox==1.0.9

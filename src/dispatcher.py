@@ -2,7 +2,7 @@
 """
 
 from functions.os_ops import open_calculator, open_camera, open_cmd, open_notepad, open_discord
-from intents import myipintent, newsintent, weatherintent,whattimeintent,wikipediaintent,emailintent,moviesintent
+from intents import myipintent,newsintent,weatherintent,whattimeintent,wikipediaintent,emailintent,moviesintent
 from functions.online_ops import get_random_advice, get_random_joke, play_on_youtube, search_on_google, send_whatsapp_message
 from speaker import speak
 from listener import take_user_input
@@ -57,7 +57,9 @@ def dispatch(query):
         moviesintent.handle_intent(query)
     elif 'news' in query:
         newsintent.handle_intent(query)
-    elif 'what time is it' in query or 'what\'s today' in query or 'what is today' in query:
+    elif 'what time is it' in query \
+            or 'what\'s today' in query \
+            or 'what is today' in query:
         whattimeintent.handle_intent(query)
     elif 'weather' in query:
         weatherintent.handle_intent(query)
